@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MUSIC</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <style>
+    body {
+      background-color: #3a6073;
+    }
+    .main-div {
+      font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      width: 95vw;
+      height: 95vh;
+      display: flex;
+      justify-content: center;
+    }
+    .img-container {
+      border-radius: 500px;
+    }
+    .music-container {
+      box-shadow: 0rem 0.3rem 1rem 1rem rgba(119, 118, 118, 0.726);
+      border-radius: 20px;
+      width: 27vw;
+      height: 80vh;
+      background-color: rgb(254, 254, 255);
+      text-align: center;
+      padding: 0.5rem;
+      margin-top: 10px;
+      padding-bottom: 30px;
+    }
+    img {
+      object-fit: cover;
+      border-radius: 500px;
+      width: 22vw;
+      height: 45vh;
+      box-shadow: 0rem 0.1rem 1.5rem 0.5rem rgb(0 0 0 / 40%);
+    }
+    .animate {
+      animation: animate 3s linear infinite;
+    }
+    @keyframes animate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .music-control {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-top: 2vh;
+    }
+    .fas {
+      cursor: pointer;
+      font-size: 2.5vw;
+      transition: all;
+      transition-duration: 0.3s;
+    }
+    .fas:hover {
+      color: orangered;
+      transform: scale(1.2);
+    }
+    #play {
+      border-radius: 30px;
+      padding: 5px;
+      color: white;
+      background-color: black;
+    }
+    #play:hover {
+      color: orangered;
+    }
+    @media screen and (max-width: 750px) {
+      .music-container {
+        width: 50vw;
+        height: 75vh;
+        padding-bottom: 30px;
+      }
+      img {
+        width: 43vw;
+        height: 43vh;
+      }
+      #play {
+        border-radius: 30px;
+        padding: 8px;
+        color: white;
+        background-color: black;
+      }
+      .fas {
+        font-size: 4vw;
+      }
+    }
+
+    .progress-duration {
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-div {
+      position: relative;
+      cursor: pointer;
+      width: 100%;
+      appearance: none;
+      height: 4px;
+      border-radius: 20px;
+      background-color: grey;
+      transition: width 1s linear;
+    }
+    .progress {
+      border-radius: 30px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background-color: rgba(0, 0, 0, 0.89);
+    }
+  </style>
+  <body>
+    <div class="main-div">
+      <div class="music-container">
+        <h2 id="title"></h2>
+        <h3 id="artist"></h3>
+        <div class="img-container">
+          <img src="" />
+        </div>
+        <audio src="music1.mp3"></audio>
+        <!-- progress bar -->
+        <div class="progress-bar-container" id="progress-container">
+          <div class="progress-duration">
+            <div id="current-time"></div>
+            <div id="duration"></div>
+          </div>
+          <div class="progress-div" id="progress-div">
+            <div class="progress" id="progress"></div>
+          </div>
+        </div>
+
+        <!-- controls -->
+        <div class="music-control">
+          <i class="fas fa-backward" id="previous" title="previous"></i>
+          <i class="fas fa-play" id="play" title="play"></i>
+          <i class="fas fa-forward" id="forward" title="forward"></i>
+        </div>
+      </div>
+    </div>
+    <script>
+      const image = document.querySelector("img");
+      const music = document.querySelector("audio");
+      var play = document.querySelector("#play");
+
+      let isPlaying = false;
+      const PlayMusic = () => {
+        isPlaying = true;
+        music.play();
+        image.classList.add("animate");
+        play.classList.replace("fa-play", "fa-pause");
+      };
+
+      const PauseMusic = () => {
+        isPlaying = false;
+        music.pause();
+        image.classList.remove("animate");
+        play.classList.replace("fa-pause", "fa-play");
+      };
+
+      play.addEventListener("click", () => {
+        isPlaying ? PauseMusic() : PlayMusic();
+      });
+
+      const songs = [
+        {
+          name: "music1",
+          artist: "Milind Gaba",
+          title: "Daru Party",
+          image: "raftaar1",
+        },
+        {
+          name: "music2",
+          artist: "Siddhu Moosewala",
+          title: "Devil",
+          image: "raftaar2",
+        },
+        {
+          name: "music3",
+          artist: "Siddhu Moosewala",
+          title: "Dawood",
+          image: "raftaar3",
+        },
+        {
+          name: "music4",
+          artist: "Harry",
+          title: "Desi Desi",
+          image: "raftaar4",
+        },
+      ];
+
+      const previous = document.querySelector("#previous");
+      const forward = document.querySelector("#forward");
+      const artist = document.querySelector("#artist");
+      const title = document.querySelector("#title");
+
+      const loadsong = (songs) => {
+        title.textContent = songs.title;
+        artist.textContent = songs.artist;
+        music.src = "music/" + songs.name + ".mp3";
+        image.src = "SCREEN SHOT🔫/" + songs.image + ".jpg";
+      };
+
+      let i = 0; //index
+      loadsong(songs[i]);
+      previous.addEventListener("click", () => {
+        i = (i - 1 + songs.length) % songs.length;
+        loadsong(songs[i]);
+        PlayMusic();
+      });
+      forward.addEventListener("click", nextsong);
+      function nextsong() {
+        i = (i + 1) % songs.length;
+        loadsong(songs[i]);
+        PlayMusic();
+      }
+
+      //progress div js
+      let divduration = document.getElementById("duration");
+      let currenttime = document.querySelector("#current-time");
+      let progress = document.getElementById("progress");
+      music.addEventListener("timeupdate", (event) => {
+        const { currentTime, duration } = event.srcElement;
+        let progress_time = (currentTime / duration) * 100;
+        progress.style.width = `${progress_time}%`;
+        totaltimeminute = Math.floor(duration / 60);
+        totaltimesec = Math.floor(duration % 60);
+        let final_duration;
+        if (totaltimesec < 10) {
+          final_duration = totaltimeminute + ":0" + totaltimesec;
+        } else {
+          final_duration = totaltimeminute + ":" + totaltimesec;
+        }
+        if (duration) {
+          divduration.textContent = final_duration;
+        }
+
+        currenttimeMIN = Math.floor(currentTime / 60);
+        currenttimeSEC = Math.floor(currentTime % 60);
+        let Final_current_time;
+        if (currenttimeSEC < 10) {
+          Final_current_time = currenttimeMIN + ":0" + currenttimeSEC;
+        } else {
+          Final_current_time = currenttimeMIN + ":" + currenttimeSEC;
+        }
+        currenttime.textContent = Final_current_time;
+      });
+      music.addEventListener("ended", nextsong);
+
+      const progress_div = document.getElementById("progress-div");
+      progress_div.addEventListener("click", (event) => {
+        const { duration } = music;
+        const length =
+          (event.offsetX / event.srcElement.clientWidth) * duration;
+        music.currentTime = length;
+      });
+    </script>
+  </body>
+</html>
